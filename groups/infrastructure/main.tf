@@ -20,6 +20,30 @@ terraform {
   backend "s3" {}
 }
 
+module "oracle-query-api-alb" {
+  source = "git@github.com:companieshouse/terraform-modules/aws/application_load_balancer?ref=1.0.231"
+
+  environment         = var.environment
+  service             = "oracle-query-api"
+  ssl_certificate_arn = data.aws_acm_certificate.cert.arn
+  subnet_ids          = values(local.routing_subnet_ids)
+  vpc_id              = data.aws_vpc.vpc.id
+  idle_timeout        = 1200
+
+  create_security_group  = true
+  internal               = var.alb_internal
+  ingress_cidrs          = ["0.0.0.0/0"]
+  redirect_http_to_https = true
+  service_configuration = {
+    default = {
+      listener_config = {
+        default_action_type = "fixed-response"
+        port                = 443
+      }
+    }
+  }
+}
+
 module "ecs-cluster" {
   source = "git@github.com:companieshouse/terraform-modules//aws/ecs/ecs-cluster?ref=1.0.231"
 
