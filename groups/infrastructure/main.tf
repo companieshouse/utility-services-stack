@@ -31,7 +31,7 @@ module "oracle-query-api-alb" {
   idle_timeout        = 1200
 
   create_security_group  = true
-  internal               = var.alb_internal
+  internal               = true
   ingress_cidrs          = ["0.0.0.0/0"]
   redirect_http_to_https = true
   service_configuration = {
