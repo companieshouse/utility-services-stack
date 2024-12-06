@@ -11,6 +11,11 @@ locals {
   vpc_name                   = local.stack_secrets["vpc_name"]
   notify_topic_slack_endpoint = local.stack_secrets["notify_topic_slack_endpoint"]
 
+  routing_subnet_ids = zipmap(
+    data.aws_subnet.routing_subnets.*.availability_zone,
+    data.aws_subnet.routing_subnets.*.id
+  )
+
   parameter_store_secrets    = {
     "web-oauth2-cookie-secret" = local.stack_secrets["web-oauth2-cookie-secret"]
   }

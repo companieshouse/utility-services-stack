@@ -21,7 +21,7 @@ terraform {
 }
 
 module "oracle-query-api-alb" {
-  source = "git@github.com:companieshouse/terraform-modules/aws/application_load_balancer?ref=1.0.231"
+  source = "git@github.com:companieshouse/terraform-modules//aws/application_load_balancer?ref=1.0.231"
 
   environment         = var.environment
   service             = "oracle-query-api"
