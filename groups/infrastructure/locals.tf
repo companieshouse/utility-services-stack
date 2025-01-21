@@ -12,6 +12,7 @@ locals {
   notify_topic_slack_endpoint = local.stack_secrets["notify_topic_slack_endpoint"]
   ingress_cidrs_private      = concat(local.management_private_subnet_cidrs, local.application_cidrs)
   ingress_prefix_list_ids    = [data.aws_ec2_managed_prefix_list.admin.id]
+  subnet_ids_private              = join(",", data.aws_subnets.private.ids)
   management_private_subnet_cidrs = [for subnet in data.aws_subnet.management : subnet.cidr_block]
   application_cidrs               = [for subnet in data.aws_subnet.private : subnet.cidr_block]
 

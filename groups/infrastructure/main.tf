@@ -26,7 +26,7 @@ module "oracle-query-api-alb" {
   environment         = var.environment
   service             = "oracle-query-api"
   ssl_certificate_arn = data.aws_acm_certificate.cert.arn
-  subnet_ids          = values(local.routing_subnet_ids)
+  subnet_ids          = split(",", local.subnet_ids_private)
   vpc_id              = data.aws_vpc.vpc.id
   idle_timeout        = 1200
   create_security_group  = true
