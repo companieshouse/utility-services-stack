@@ -23,24 +23,6 @@ variable "enable_admin_web_lb" {
   default = true
 }
 
-variable "route53_aliases_admin_web" {
-  default     = []
-  description = "Route53 alases to assing to the admin-web lb"
-  type        = list(any)
-}
-
-variable "create_route53_aliases" {
-  default     = false
-  description = "Weather to create Route53 aliases pointing to the ALB"
-  type        = bool
-}
-
-variable "domain_name" {
-  description = "Domain name"
-  type        = string
-  default     = "*.companieshouse.gov.uk"
-}
-
 # EC2
 variable "ec2_key_pair_name" {
   type        = string
