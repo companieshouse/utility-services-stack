@@ -35,6 +35,7 @@ module "oracle-query-api-alb" {
   ingress_cidrs          = local.ingress_cidrs_private
   ingress_prefix_list_ids = local.ingress_prefix_list_ids
   redirect_http_to_https = true
+  route53_domain_name     = var.domain_name
   service_configuration = {
     default = {
       listener_config = {
