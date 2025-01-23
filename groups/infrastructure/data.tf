@@ -37,7 +37,7 @@ data "aws_subnet" "routing_subnets" {
   }
 }
 
-data "aws_ec2_managed_prefix_list" "admin" {
+data "aws_ec2_managed_prefix_list" "oracle_query_api" {
   name = "administration-cidr-ranges"
 }
 
