@@ -19,7 +19,7 @@ variable "cert_domain" {
   description = "The certificate domain to use."
 }
 
-variable "enable_admin_web_lb" {
+variable "enable_oracle_query_api_alb" {
   default = true
 }
 
