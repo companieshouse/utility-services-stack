@@ -4,3 +4,4 @@ enable_container_insights = true
 cert_domain = "cidev.aws.chdev.org"
 
 ec2_key_pair_name = "chs-cidev"
+domain_name = "aws.chdev.org"

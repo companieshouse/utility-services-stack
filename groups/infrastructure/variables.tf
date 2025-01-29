@@ -26,7 +26,6 @@ variable "enable_oracle_query_api_alb" {
 variable "domain_name" {
   description = "Domain name"
   type        = string
-  default     = "*.companieshouse.gov.uk"
 }
 
 # EC2
