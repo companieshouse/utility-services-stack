@@ -21,18 +21,18 @@ terraform {
 }
 
 module "oracle-query-api-alb" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/application_load_balancer?ref=1.0.231"
+  source = "git@github.com:companieshouse/terraform-modules//aws/application_load_balancer?ref=1.0.297"
 
-  environment         = var.environment
-  service             = "oracle-query-api"
-  ssl_certificate_arn = data.aws_acm_certificate.cert.arn
-  subnet_ids          = split(",", local.subnet_ids_private)
-  vpc_id              = data.aws_vpc.vpc.id
-  idle_timeout        = 1200
-  create_security_group  = true
-  internal               = true
-  count                  = var.enable_oracle_query_api_alb ? 1 : 0
-  ingress_cidrs          = local.ingress_cidrs_private
+  environment             = var.environment
+  service                 = "oracle-query-api"
+  ssl_certificate_arn     = data.aws_acm_certificate.cert.arn
+  subnet_ids              = split(",", local.subnet_ids_private)
+  vpc_id                  = data.aws_vpc.vpc.id
+  idle_timeout            = 1200
+  create_security_group   = true
+  internal                = true
+  count                   = var.enable_oracle_query_api_alb ? 1 : 0
+  ingress_cidrs           = local.ingress_cidrs_private
   ingress_prefix_list_ids = local.ingress_prefix_list_ids
   redirect_http_to_https = true
   service_configuration = {
@@ -68,8 +68,8 @@ module "ecs-cluster" {
 module "secrets" {
   source = "git@github.com:companieshouse/terraform-modules//aws/ecs/secrets?ref=1.0.231"
 
-  environment = var.environment
-  name_prefix = local.name_prefix
-  secrets     = local.parameter_store_secrets
-  kms_key_id  = data.aws_kms_key.stack_configs.id
+  environment   = var.environment
+  name_prefix   = local.name_prefix
+  secrets       = local.parameter_store_secrets
+  kms_key_id    = data.aws_kms_key.stack_configs.id
 }

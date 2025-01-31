@@ -23,6 +23,11 @@ variable "enable_oracle_query_api_alb" {
   default = true
 }
 
+variable "domain_name" {
+  description = "Domain name"
+  type        = string
+}
+
 # EC2
 variable "ec2_key_pair_name" {
   type        = string
