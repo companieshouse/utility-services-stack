@@ -36,11 +36,9 @@ module "oracle-query-api-alb" {
   ingress_prefix_list_ids = local.ingress_prefix_list_ids
   redirect_http_to_https = true
   service_configuration = {
-    default = {
       listener_config = {
         default_action_type = "fixed-response"
         port                = 443
-      }
     }
   }
 }
