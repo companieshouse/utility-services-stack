@@ -5,3 +5,5 @@ cert_domain = "cidev.aws.chdev.org"
 
 ec2_key_pair_name = "chs-cidev"
 domain_name = "aws.chdev.org"
+create_route53_aliases = true
+route53_aliases = ["oracle-query-api"]
