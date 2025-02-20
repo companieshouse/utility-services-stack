@@ -4,3 +4,5 @@ enable_container_insights = true
 cert_domain = "*.companieshouse.gov.uk"
 domain_name = "*.companieshouse.gov.uk"
 ec2_key_pair_name = "ch-aws-live"
+create_route53_aliases = true
+route53_aliases = ["oracle-query-api"]
