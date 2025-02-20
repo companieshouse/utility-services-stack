@@ -96,6 +96,6 @@ variable "route53_aliases" {
 
 variable "create_route53_aliases" {
   default     = false
-  description = "Weather to create Route53 aliases pointing to the ALB"
+  description = "Whether to create Route53 aliases pointing to the ALB"
   type        = bool
 }
