@@ -92,9 +92,15 @@ variable "enable_container_insights" {
 
 # DNS
 
-variable "route53_aliases" {
+variable "route53_aliases_oracle_query_api" {
   type        = list(string)
-  description = "The Route53 aliases to create."
+  description = "The Route53 aliases to create for service oracle-query-api."
+  default     = []
+}
+
+variable "route53_aliases_enablement_presenter_api" {
+  type        = list(string)
+  description = "The Route53 aliases to create for service enablement-presenter-api."
   default     = []
 }
 
