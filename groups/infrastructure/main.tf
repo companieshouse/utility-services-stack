@@ -50,7 +50,7 @@ module "enablement-presenter-api-alb" {
   source = "git@github.com:companieshouse/terraform-modules//aws/application_load_balancer?ref=1.0.307"
 
   environment             = var.environment
-  service                 = "enablement-presenter-api"
+  service                 = "enablement-pres-api"
   ssl_certificate_arn     = data.aws_acm_certificate.cert.arn
   subnet_ids              = split(",", local.subnet_ids_private)
   vpc_id                  = data.aws_vpc.vpc.id
