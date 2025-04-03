@@ -23,6 +23,10 @@ variable "enable_oracle_query_api_alb" {
   default = true
 }
 
+variable "enable_enablement_presenter_api_alb" {
+  default = true
+}
+
 variable "domain_name" {
   description = "Domain name"
   type        = string
