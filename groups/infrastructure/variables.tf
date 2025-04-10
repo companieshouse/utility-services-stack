@@ -23,6 +23,10 @@ variable "enable_oracle_query_api_alb" {
   default = true
 }
 
+variable "enable_enablement_presenter_api_alb" {
+  default = true
+}
+
 variable "domain_name" {
   description = "Domain name"
   type        = string
@@ -88,9 +92,15 @@ variable "enable_container_insights" {
 
 # DNS
 
-variable "route53_aliases" {
+variable "route53_aliases_oracle_query_api" {
   type        = list(string)
-  description = "The Route53 aliases to create."
+  description = "The Route53 aliases to create for oracle-query-api lb."
+  default     = []
+}
+
+variable "route53_aliases_enablement_presenter_api" {
+  type        = list(string)
+  description = "The Route53 aliases to create for enablement-presenter-api lb ."
   default     = []
 }
 
