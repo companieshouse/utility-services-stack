@@ -13,7 +13,7 @@ terraform {
 }
 
 provider "aws" {
-  region  = var.aws_region
+  region = var.aws_region
 }
 
 terraform {
@@ -39,9 +39,9 @@ module "oracle-query-api-alb" {
   route53_aliases         = var.route53_aliases_oracle_query_api
   create_route53_aliases  = var.create_route53_aliases
   service_configuration = {
-      listener_config = {
-        default_action_type = "fixed-response"
-        port                = 443
+    listener_config = {
+      default_action_type = "fixed-response"
+      port                = 443
     }
   }
 }
@@ -65,9 +65,9 @@ module "enablement-presenter-api-alb" {
   route53_aliases         = var.route53_aliases_enablement_presenter_api
   create_route53_aliases  = var.create_route53_aliases
   service_configuration = {
-      listener_config = {
-        default_action_type = "fixed-response"
-        port                = 443
+    listener_config = {
+      default_action_type = "fixed-response"
+      port                = 443
     }
   }
 }
@@ -97,8 +97,8 @@ module "ecs-cluster" {
 module "secrets" {
   source = "git@github.com:companieshouse/terraform-modules//aws/ecs/secrets?ref=1.0.231"
 
-  environment   = var.environment
-  name_prefix   = local.name_prefix
-  secrets       = local.parameter_store_secrets
-  kms_key_id    = data.aws_kms_key.stack_configs.id
+  environment = var.environment
+  name_prefix = local.name_prefix
+  secrets     = local.parameter_store_secrets
+  kms_key_id  = data.aws_kms_key.stack_configs.id
 }
