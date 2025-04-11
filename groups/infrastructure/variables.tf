@@ -15,21 +15,25 @@ variable "aws_profile" {
 }
 
 variable "cert_domain" {
-  type        = string
   description = "The certificate domain to use."
-}
-
-variable "enable_oracle_query_api_alb" {
-  default = true
-}
-
-variable "enable_enablement_presenter_api_alb" {
-  default = true
+  type        = string
 }
 
 variable "domain_name" {
   description = "Domain name"
   type        = string
+}
+
+variable "enable_oracle_query_api_alb" {
+  default     = true
+  description = "Defines whether an ALB for the oracle-query-api should be created (true) or not (false)"
+  type        = bool
+}
+
+variable "enable_enablement_presenter_api_alb" {
+  default     = true
+  description = "Defines whether an ALB for the enablement-presenter-api should be created (true) or not (false)"
+  type        = bool
 }
 
 # EC2
