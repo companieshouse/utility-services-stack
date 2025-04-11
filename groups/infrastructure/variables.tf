@@ -32,7 +32,7 @@ variable "enable_oracle_query_api_alb" {
 
 variable "enable_enablement_presenter_api_alb" {
   default     = true
-  description = Defines whether an ALB for the enablement-presenter-api should be created (true) or not (false)"
+  description = "Defines whether an ALB for the enablement-presenter-api should be created (true) or not (false)"
   type        = bool
 }
 
