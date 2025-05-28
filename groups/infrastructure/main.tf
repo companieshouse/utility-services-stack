@@ -61,7 +61,7 @@ module "enablement-presenter-api-alb" {
   ingress_cidrs           = local.ingress_cidrs_private
   ingress_prefix_list_ids = local.ingress_prefix_list_ids
   redirect_http_to_https  = true
-  route53_domain_name     = var.domain_name
+  route53_domain_name     = var.priv_domain_name
   route53_aliases         = var.route53_aliases_enablement_presenter_api
   create_route53_aliases  = var.create_route53_aliases
   service_configuration = {
