@@ -38,7 +38,7 @@ variable "enable_enablement_presenter_api_alb" {
 
 variable "enable_ch_service_mock_alb" {
   default     = true
-  description = "Defines whether an ALB for the oracle-query-api should be created (true) or not (false)"
+  description = "Defines whether an ALB for the ch-service-mock should be created (true) or not (false)"
   type        = bool
 }
 
@@ -122,6 +122,6 @@ variable "create_route53_aliases" {
 
 variable "route53_aliases_ch_service_mock" {
   type        = list(string)
-  description = "The Route53 aliases to create for enablement-presenter-api lb ."
+  description = "The Route53 aliases to create for ch-service-mock lb ."
   default     = []
 }
