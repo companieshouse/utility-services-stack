@@ -113,3 +113,9 @@ variable "create_route53_aliases" {
   description = "Whether to create Route53 aliases pointing to the ALB"
   type        = bool
 }
+
+variable "route53_aliases_ch_service_mock" {
+  type        = list(string)
+  description = "The Route53 aliases to create for enablement-presenter-api lb ."
+  default     = []
+}
