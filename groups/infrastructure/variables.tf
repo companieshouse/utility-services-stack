@@ -36,6 +36,12 @@ variable "enable_enablement_presenter_api_alb" {
   type        = bool
 }
 
+variable "enable_ch_service_mock_alb" {
+  default     = true
+  description = "Defines whether an ALB for the oracle-query-api should be created (true) or not (false)"
+  type        = bool
+}
+
 # EC2
 variable "ec2_key_pair_name" {
   type        = string
