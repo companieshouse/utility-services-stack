@@ -33,7 +33,6 @@ module "oracle-query-api-alb" {
   internal                = true
   count                   = var.enable_oracle_query_api_alb ? 1 : 0
   ingress_cidrs           = local.ingress_cidrs_private
-  ingress_prefix_list_ids = local.ingress_prefix_list_ids
   redirect_http_to_https  = true
   route53_domain_name     = var.domain_name
   route53_aliases         = var.route53_aliases_oracle_query_api
@@ -76,7 +75,7 @@ module "ch-service-mock-alb" {
   source = "git@github.com:companieshouse/terraform-modules//aws/application_load_balancer?ref=1.0.329"
 
   count                   = var.enable_ch_service_mock_alb ? 1 : 0  
-  
+
   environment             = var.environment
   service                 = "ch-service-mock"
   ssl_certificate_arn     = data.aws_acm_certificate.cert.arn
