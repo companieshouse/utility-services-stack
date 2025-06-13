@@ -36,6 +36,12 @@ variable "enable_enablement_presenter_api_alb" {
   type        = bool
 }
 
+variable "enable_ch_service_mock_alb" {
+  default     = true
+  description = "Defines whether an ALB for the ch-service-mock should be created (true) or not (false)"
+  type        = bool
+}
+
 # EC2
 variable "ec2_key_pair_name" {
   type        = string
@@ -112,4 +118,10 @@ variable "create_route53_aliases" {
   default     = false
   description = "Whether to create Route53 aliases pointing to the ALB"
   type        = bool
+}
+
+variable "route53_aliases_ch_service_mock" {
+  type        = list(string)
+  description = "The Route53 aliases to create for ch-service-mock lb"
+  default     = []
 }
