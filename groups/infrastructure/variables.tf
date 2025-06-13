@@ -122,6 +122,6 @@ variable "create_route53_aliases" {
 
 variable "route53_aliases_ch_service_mock" {
   type        = list(string)
-  description = "The Route53 aliases to create for ch-service-mock lb ."
+  description = "The Route53 aliases to create for ch-service-mock lb"
   default     = []
 }

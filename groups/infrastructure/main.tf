@@ -75,6 +75,8 @@ module "enablement-presenter-api-alb" {
 module "ch-service-mock-alb" {
   source = "git@github.com:companieshouse/terraform-modules//aws/application_load_balancer?ref=1.0.329"
 
+  count                   = var.enable_ch_service_mock_alb ? 1 : 0  
+  
   environment             = var.environment
   service                 = "ch-service-mock"
   ssl_certificate_arn     = data.aws_acm_certificate.cert.arn
@@ -83,7 +85,6 @@ module "ch-service-mock-alb" {
   idle_timeout            = 1200
   create_security_group   = true
   internal                = true
-  count                   = var.enable_ch_service_mock_alb ? 1 : 0
   ingress_cidrs           = local.ingress_cidrs_private
   ingress_prefix_list_ids = local.ingress_prefix_list_ids
   redirect_http_to_https  = true
