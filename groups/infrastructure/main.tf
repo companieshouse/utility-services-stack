@@ -76,6 +76,7 @@ module "ch-service-mock-alb" {
   source = "git@github.com:companieshouse/terraform-modules//aws/application_load_balancer?ref=1.0.329"
 
   count                   = var.enable_ch_service_mock_alb ? 1 : 0
+  
   environment             = var.environment
   service                 = "ch-service-mock"
   ssl_certificate_arn     = data.aws_acm_certificate.cert.arn
