@@ -36,6 +36,12 @@ variable "enable_enablement_presenter_api_alb" {
   type        = bool
 }
 
+variable "enable_felixvalidator_alb" {
+  default     = true
+  description = "Defines whether an ALB for the felixvalidator should be created (true) or not (false)"
+  type        = bool
+}
+
 variable "enable_ch_service_mock_alb" {
   default     = true
   description = "Defines whether an ALB for the ch-service-mock should be created (true) or not (false)"
@@ -111,6 +117,12 @@ variable "route53_aliases_oracle_query_api" {
 variable "route53_aliases_enablement_presenter_api" {
   type        = list(string)
   description = "The Route53 aliases to create for enablement-presenter-api lb ."
+  default     = []
+}
+
+variable "route53_aliases_felixvalidator" {
+  type        = list(string)
+  description = "The Route53 aliases to create for felixvalidator lb ."
   default     = []
 }
 
