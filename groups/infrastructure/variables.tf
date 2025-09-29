@@ -137,3 +137,13 @@ variable "route53_aliases_ch_service_mock" {
   description = "The Route53 aliases to create for ch-service-mock lb"
   default     = []
 }
+
+variable "heritage_aws_access_key_id" {
+  type        = string
+  description = "Variable access key for heritage accounts"
+}
+
+variable "heritage_aws_secret_access_key" {
+  type        = string
+  description = "Variable secret key for heritage accounts"
+}

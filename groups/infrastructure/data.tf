@@ -72,3 +72,19 @@ data "aws_subnets" "private" {
     values = ["private"]
   }
 }
+
+data "aws_subnets" "heritage_application" {
+  provider = aws.heritage
+
+  filter {
+    name   = "tag:Name"
+    values = [local.heritage_app_subnet_pattern]
+  }
+}
+
+data "aws_subnet" "heritage_application" {
+  for_each = toset(data.aws_subnets.heritage_application.ids)
+  provider = aws.heritage
+
+  id = each.value
+}

@@ -16,12 +16,20 @@ provider "aws" {
   region = var.aws_region
 }
 
+provider "aws" {
+  alias = "heritage"
+
+  region     = var.aws_region
+  access_key = var.heritage_aws_access_key_id
+  secret_key = var.heritage_aws_secret_access_key
+}
+
 terraform {
   backend "s3" {}
 }
 
 module "oracle-query-api-alb" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/application_load_balancer?ref=1.0.297"
+  source = "git@github.com:companieshouse/terraform-modules//aws/application_load_balancer?ref=1.0.348"
 
   environment             = var.environment
   service                 = "oracle-query-api"
@@ -47,7 +55,7 @@ module "oracle-query-api-alb" {
 }
 
 module "enablement-presenter-api-alb" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/application_load_balancer?ref=1.0.307"
+  source = "git@github.com:companieshouse/terraform-modules//aws/application_load_balancer?ref=1.0.348"
 
   environment             = var.environment
   service                 = "enablement-pres-api"
@@ -73,9 +81,9 @@ module "enablement-presenter-api-alb" {
 }
 
 module "felixvalidator-alb" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/application_load_balancer?ref=1.0.329"
-  
-  count                   = var.enable_felixvalidator_alb ? 1 : 0
+  source = "git@github.com:companieshouse/terraform-modules//aws/application_load_balancer?ref=1.0.348"
+
+  count = var.enable_felixvalidator_alb ? 1 : 0
 
   environment             = var.environment
   service                 = "felixvalidator"
@@ -85,7 +93,7 @@ module "felixvalidator-alb" {
   idle_timeout            = 1200
   create_security_group   = true
   internal                = true
-  ingress_cidrs           = local.ingress_cidrs_private
+  ingress_cidrs           = local.felixvalidator_ingress_cidrs
   ingress_prefix_list_ids = local.ingress_prefix_list_ids
   redirect_http_to_https  = true
   route53_domain_name     = var.domain_name
@@ -100,23 +108,23 @@ module "felixvalidator-alb" {
 }
 
 module "ch-service-mock-alb" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/application_load_balancer?ref=1.0.329"
+  source = "git@github.com:companieshouse/terraform-modules//aws/application_load_balancer?ref=1.0.348"
 
-  count                   = var.enable_ch_service_mock_alb ? 1 : 0
-  
-  environment             = var.environment
-  service                 = "ch-service-mock"
-  ssl_certificate_arn     = data.aws_acm_certificate.cert.arn
-  subnet_ids              = split(",", local.subnet_ids_private)
-  vpc_id                  = data.aws_vpc.vpc.id
-  idle_timeout            = 1200
-  create_security_group   = true
-  internal                = true
-  ingress_cidrs           = local.application_cidrs
-  redirect_http_to_https  = true
-  route53_domain_name     = var.domain_name
-  route53_aliases         = var.route53_aliases_ch_service_mock
-  create_route53_aliases  = var.create_route53_aliases
+  count = var.enable_ch_service_mock_alb ? 1 : 0
+
+  environment            = var.environment
+  service                = "ch-service-mock"
+  ssl_certificate_arn    = data.aws_acm_certificate.cert.arn
+  subnet_ids             = split(",", local.subnet_ids_private)
+  vpc_id                 = data.aws_vpc.vpc.id
+  idle_timeout           = 1200
+  create_security_group  = true
+  internal               = true
+  ingress_cidrs          = local.application_cidrs
+  redirect_http_to_https = true
+  route53_domain_name    = var.domain_name
+  route53_aliases        = var.route53_aliases_ch_service_mock
+  create_route53_aliases = var.create_route53_aliases
   service_configuration = {
     listener_config = {
       default_action_type = "fixed-response"
@@ -148,7 +156,7 @@ module "ecs-cluster" {
 }
 
 module "secrets" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/ecs/secrets?ref=1.0.231"
+  source = "git@github.com:companieshouse/terraform-modules//aws/ecs/secrets?ref=1.0.348"
 
   environment = var.environment
   name_prefix = local.name_prefix
