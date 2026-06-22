@@ -1,9 +1,15 @@
+data "aws_caller_identity" "current" {}
+
 data "vault_generic_secret" "secrets" {
   path = "applications/${var.aws_profile}/${var.environment}/${local.stack_fullname}"
 }
 
 data "aws_kms_key" "stack_configs" {
   key_id = "alias/${var.aws_profile}/${local.kms_key_alias}"
+}
+
+data "vault_generic_secret" "account_ids" {
+  path = "aws-accounts/account-ids"
 }
 
 data "aws_subnets" "application" {
@@ -39,6 +45,12 @@ data "aws_subnet" "routing_subnets" {
 
 data "aws_ec2_managed_prefix_list" "admin_cidr" {
   name = "administration-cidr-ranges"
+}
+
+data "aws_ec2_managed_prefix_list" "shared_services_management" {
+  count = var.enable_concourse_access ? 1 : 0
+
+  name = "shared-services-management-cidrs"
 }
 
 data "aws_subnet" "management" {

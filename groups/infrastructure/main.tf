@@ -3,11 +3,11 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 4.54.0"
+      version = ">= 6.0, <= 7.0"
     }
     vault = {
       source  = "hashicorp/vault"
-      version = "~> 3.18.0"
+      version = ">=5.0, <= 6.0"
     }
   }
 }
@@ -17,11 +17,12 @@ provider "aws" {
 }
 
 provider "aws" {
-  alias = "heritage"
+  alias  = "heritage"
+  region = var.aws_region
 
-  region     = var.aws_region
-  access_key = var.heritage_aws_access_key_id
-  secret_key = var.heritage_aws_secret_access_key
+  assume_role {
+    role_arn = "arn:aws:iam::${local.account_ids[var.heritage_account]}:role/${data.aws_caller_identity.current.account_id}-terraform-lookup"
+  }
 }
 
 terraform {
@@ -153,13 +154,4 @@ module "ecs-cluster" {
   scaleup_schedule            = var.asg_scaleup_schedule
   enable_asg_autoscaling      = var.enable_asg_autoscaling
   notify_topic_slack_endpoint = local.notify_topic_slack_endpoint
-}
-
-module "secrets" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/ecs/secrets?ref=1.0.348"
-
-  environment = var.environment
-  name_prefix = local.name_prefix
-  secrets     = local.parameter_store_secrets
-  kms_key_id  = data.aws_kms_key.stack_configs.id
 }

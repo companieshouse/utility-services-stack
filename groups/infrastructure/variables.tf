@@ -48,6 +48,12 @@ variable "enable_ch_service_mock_alb" {
   type        = bool
 }
 
+variable "enable_concourse_access" {
+  default     = false
+  description = "Defines whether access from concourse to lbs using the prefix list should be enabled"
+  type        = bool
+}
+
 # EC2
 variable "ec2_key_pair_name" {
   type        = string
@@ -138,12 +144,7 @@ variable "route53_aliases_ch_service_mock" {
   default     = []
 }
 
-variable "heritage_aws_access_key_id" {
+variable "heritage_account" {
+  description = "The heritage account for data lookups"
   type        = string
-  description = "Variable access key for heritage accounts"
-}
-
-variable "heritage_aws_secret_access_key" {
-  type        = string
-  description = "Variable secret key for heritage accounts"
 }
