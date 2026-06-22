@@ -11,7 +11,7 @@ locals {
   notify_topic_slack_endpoint     = local.stack_secrets["notify_topic_slack_endpoint"]
   ingress_cidrs_private           = concat(local.management_private_subnet_cidrs, local.application_cidrs)
   felixvalidator_ingress_cidrs    = concat(local.ingress_cidrs_private, local.heritage_application_cidrs)
-  ingress_prefix_list_ids         = [data.aws_ec2_managed_prefix_list.admin_cidr.id]
+  ingress_prefix_list_ids         = concat([data.aws_ec2_managed_prefix_list.admin_cidr.id], data.aws_ec2_managed_prefix_list.shared_services_management[*].id)
   subnet_ids_private              = join(",", data.aws_subnets.private.ids)
   management_private_subnet_cidrs = [for subnet in data.aws_subnet.management : subnet.cidr_block]
   application_cidrs               = [for subnet in data.aws_subnet.private : subnet.cidr_block]
@@ -22,7 +22,5 @@ locals {
     data.aws_subnet.routing_subnets.*.id
   )
 
-  parameter_store_secrets = {
-    "web-oauth2-cookie-secret" = local.stack_secrets["web-oauth2-cookie-secret"]
-  }
+  account_ids    = data.vault_generic_secret.account_ids.data
 }
