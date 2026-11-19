@@ -1,5 +1,5 @@
 terraform {
-  required_version = "~> 1.3"
+  required_version = ">= 1.3.0, < 2.0.0"
   required_providers {
     aws = {
       source  = "hashicorp/aws"
@@ -30,7 +30,7 @@ terraform {
 }
 
 module "oracle-query-api-alb" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/application_load_balancer?ref=1.0.348"
+  source = "git@github.com:companieshouse/terraform-modules//aws/application_load_balancer?ref=1.0.449"
 
   environment             = var.environment
   service                 = "oracle-query-api"
@@ -56,7 +56,7 @@ module "oracle-query-api-alb" {
 }
 
 module "enablement-presenter-api-alb" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/application_load_balancer?ref=1.0.348"
+  source = "git@github.com:companieshouse/terraform-modules//aws/application_load_balancer?ref=1.0.449"
 
   environment             = var.environment
   service                 = "enablement-pres-api"
@@ -82,7 +82,7 @@ module "enablement-presenter-api-alb" {
 }
 
 module "felixvalidator-alb" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/application_load_balancer?ref=1.0.348"
+  source = "git@github.com:companieshouse/terraform-modules//aws/application_load_balancer?ref=1.0.449"
 
   count = var.enable_felixvalidator_alb ? 1 : 0
 
@@ -109,7 +109,7 @@ module "felixvalidator-alb" {
 }
 
 module "ch-service-mock-alb" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/application_load_balancer?ref=1.0.348"
+  source = "git@github.com:companieshouse/terraform-modules//aws/application_load_balancer?ref=1.0.449"
 
   count = var.enable_ch_service_mock_alb ? 1 : 0
 
@@ -135,12 +135,11 @@ module "ch-service-mock-alb" {
 }
 
 module "ecs-cluster" {
-  source = "git@github.com:companieshouse/terraform-modules//aws/ecs/ecs-cluster?ref=1.0.231"
+  source = "git@github.com:companieshouse/terraform-modules//aws/ecs/ecs-cluster?ref=1.0.449"
 
   stack_name                  = local.stack_name
   name_prefix                 = local.name_prefix
   environment                 = var.environment
-  aws_profile                 = var.aws_profile
   vpc_id                      = data.aws_vpc.vpc.id
   subnet_ids                  = local.application_subnet_ids
   ec2_key_pair_name           = var.ec2_key_pair_name
@@ -152,6 +151,23 @@ module "ecs-cluster" {
   asg_desired_instance_count  = var.asg_desired_instance_count
   scaledown_schedule          = var.asg_scaledown_schedule
   scaleup_schedule            = var.asg_scaleup_schedule
-  enable_asg_autoscaling      = var.enable_asg_autoscaling
-  notify_topic_slack_endpoint = local.notify_topic_slack_endpoint
+  notify_topic_slack_endpoints = sensitive(local.notify_topic_slack_endpoint)
+
+  default_tags = merge(
+    module.owner_tags.tags,
+    module.iac_tags.tags
+  )
+}
+
+module "owner_tags" {
+  source = "git@github.com:companieshouse/terraform-modules//aws/tagging/owner?ref=tags/1.0.449"
+
+  platform_owner = "Platform"
+}
+
+module "iac_tags" {
+  source = "git@github.com:companieshouse/terraform-modules//aws/tagging/iac?ref=tags/1.0.449"
+
+  source_code_url = "https://github.com/companieshouse/test-utility-services-stack"
+  group           = "infrastructure"
 }
