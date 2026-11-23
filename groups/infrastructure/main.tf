@@ -29,7 +29,7 @@ terraform {
   backend "s3" {}
 }
 
-module "oracle-query-api-alb" {
+module "oracle_query_api_alb" {
   source = "git@github.com:companieshouse/terraform-modules//aws/application_load_balancer?ref=1.0.449"
 
   environment             = var.environment
@@ -55,7 +55,7 @@ module "oracle-query-api-alb" {
   }
 }
 
-module "enablement-presenter-api-alb" {
+module "enablement_presenter_api_alb" {
   source = "git@github.com:companieshouse/terraform-modules//aws/application_load_balancer?ref=1.0.449"
 
   environment             = var.environment
@@ -81,7 +81,7 @@ module "enablement-presenter-api-alb" {
   }
 }
 
-module "felixvalidator-alb" {
+module "felixvalidator_alb" {
   source = "git@github.com:companieshouse/terraform-modules//aws/application_load_balancer?ref=1.0.449"
 
   count = var.enable_felixvalidator_alb ? 1 : 0
@@ -108,7 +108,7 @@ module "felixvalidator-alb" {
   }
 }
 
-module "ch-service-mock-alb" {
+module "ch_service_mock_alb" {
   source = "git@github.com:companieshouse/terraform-modules//aws/application_load_balancer?ref=1.0.449"
 
   count = var.enable_ch_service_mock_alb ? 1 : 0
@@ -162,6 +162,25 @@ module "ecs_cluster" {
 moved {
   from = module.ecs-cluster
   to   = module.ecs_cluster
+}
+
+moved {
+  from = module.ch-service-mock-alb
+  to   = module.ch_service_mock_alb
+}
+
+moved {
+  from = module.felixvalidator-alb
+  to   = module.felixvalidator_alb
+}
+
+moved {
+  from = module.oracle-query-api-alb
+  to   = module.oracle_query_api_alb
+}
+moved {
+  from = module.enablement-presenter-api-alb
+  to   = module.enablement_presenter_api_alb
 }
 
 module "owner_tags" {
