@@ -134,7 +134,7 @@ module "ch-service-mock-alb" {
   }
 }
 
-module "ecs-cluster" {
+module "ecs_cluster" {
   source = "git@github.com:companieshouse/terraform-modules//aws/ecs/ecs-cluster?ref=1.0.449"
 
   stack_name                  = local.stack_name
@@ -157,6 +157,11 @@ module "ecs-cluster" {
     module.owner_tags.tags,
     module.iac_tags.tags
   )
+}
+
+moved {
+  from = module.ecs-cluster
+  to   = module.ecs_cluster
 }
 
 module "owner_tags" {
