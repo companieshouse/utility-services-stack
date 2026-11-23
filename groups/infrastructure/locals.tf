@@ -8,7 +8,7 @@ locals {
   application_subnet_ids          = join(",", data.aws_subnets.application.ids)
   kms_key_alias                   = local.stack_secrets["kms_key_alias"]
   vpc_name                        = local.stack_secrets["vpc_name"]
-  notify_topic_slack_endpoint     = local.stack_secrets["notify_topic_slack_endpoint"]
+  notify_topic_slack_endpoint     = [local.stack_secrets["notify_topic_slack_endpoint"]]
   ingress_cidrs_private           = concat(local.management_private_subnet_cidrs, local.application_cidrs)
   felixvalidator_ingress_cidrs    = concat(local.ingress_cidrs_private, local.heritage_application_cidrs)
   ingress_prefix_list_ids         = concat([data.aws_ec2_managed_prefix_list.admin_cidr.id], data.aws_ec2_managed_prefix_list.shared_services_management[*].id)
